@@ -1,0 +1,21 @@
+{
+  "name": "nodespark/DESConnector",
+  "description": "An abstraction library for Elasticsearch Connector module for Drupal.",
+  "type": "library",
+  "homepage": "https://github.com/nodespark/DESConnector",
+  "require": {
+    "elasticsearch/elasticsearch": "~2.0"
+  },
+  "license": "LGPL-2.1",
+  "authors": [
+    {
+      "name": "Nikolay Ignatov",
+      "email": "nignatov@nodespark.com",
+      "homepage": "http://www.nodespark.com",
+      "role": "Creator and Maintainer"
+    }
+  ],
+  "support": {
+    "source": "https://github.com/nodespark/DESConnector"
+  }
+}
