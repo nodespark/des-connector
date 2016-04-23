@@ -1,8 +1,8 @@
 {
-  "name": "nodespark/DESConnector",
+  "name": "nodespark/des-connector",
   "description": "An abstraction library for Elasticsearch Connector module for Drupal.",
   "type": "library",
-  "homepage": "https://github.com/nodespark/DESConnector",
+  "homepage": "https://github.com/nodespark/des-connector",
   "require": {
     "elasticsearch/elasticsearch": "~2.0"
   },
@@ -16,6 +16,6 @@
     }
   ],
   "support": {
-    "source": "https://github.com/nodespark/DESConnector"
+    "source": "https://github.com/nodespark/des-connector"
   }
 }
