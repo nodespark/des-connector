@@ -15,6 +15,11 @@
       "role": "Creator and Maintainer"
     }
   ],
+  "autoload": {
+    "psr-4": {
+      "nodespark\\DESConnector\\": "src/DESConnector/"
+    }
+  },
   "support": {
     "source": "https://github.com/nodespark/des-connector"
   }

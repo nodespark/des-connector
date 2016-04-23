@@ -1,16 +1,14 @@
 <?php
 
-namespace Drupal\elasticsearch_connector\ElasticSearch;
+namespace nodespark\DESConnector;
 
-use Elasticsearch\Client;
+use Elasticsearch\ClientBuilder;
 use Elasticsearch\Common\Exceptions\ElasticsearchException;
 
 /**
- * Class ClientConnector
- *
- * @author andy.thorne@timeinc.com
+ * Class Client
  */
-class ClientConnector {
+class Client implements ClientInterface {
 
   const CLUSTER_STATUS_GREEN = 'green';
   const CLUSTER_STATUS_YELLOW = 'yellow';
@@ -19,15 +17,15 @@ class ClientConnector {
   /**
    * @var Client
    */
-  protected $client;
+  protected $proxy_client;
 
   /**
    * ClientConnector constructor.
    *
    * @param Client $client
    */
-  public function __construct(Client $client) {
-    $this->client = $client;
+  public function __construct($params) {
+    $this->initClient($params);
   }
 
   /**
@@ -107,5 +105,25 @@ class ClientConnector {
     }
 
     return $result;
+  }
+
+  /**
+   * Initialize the real Elasticsearch client.
+   *
+   * @param $params
+   *   The client initializer.
+   *
+   * @return \Elasticsearch\Client
+   */
+  private function initClient($params) {
+    $conn_params = array();
+    if (isset($params['curl'])) {
+      $conn_params['client']['curl'] = $params['curl'];
+    }
+
+    $builder = ClientBuilder::create();
+    $builder->setHosts($params['hosts']);
+
+    $this->proxy_client = $builder->build();
   }
 }
