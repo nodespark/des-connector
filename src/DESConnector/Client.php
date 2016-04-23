@@ -6,6 +6,10 @@ use Elasticsearch\ClientBuilder;
 use Elasticsearch\Common\Exceptions\ElasticsearchException;
 
 /**
+ * TODO: Remove the drupal related functions.
+ */
+
+/**
  * Class Client
  */
 class Client implements ClientInterface {
@@ -15,17 +19,35 @@ class Client implements ClientInterface {
   const CLUSTER_STATUS_RED = 'red';
 
   /**
-   * @var Client
+   * @var \Elasticsearch\Client
    */
   protected $proxy_client;
 
+  protected $params;
+
   /**
-   * ClientConnector constructor.
+   * Client constructor.
    *
-   * @param Client $client
+   * @param array $params
+   *   The params that should initialize the client.
    */
   public function __construct($params) {
-    $this->initClient($params);
+    $this->params = $params;
+    $this->initClient($this->params);
+  }
+
+  /**
+   * Magic method __call().
+   * If the method is not found, search if the method exists in the proxy.
+   * If exists, call it.
+   *
+   * @param $name
+   * @param $arguments
+   */
+  public function __call($name, $arguments) {
+    if(method_exists($this->proxy_client, $name)) {
+      return call_user_func_array(array($this->proxy_client, $name), $arguments);
+    }
   }
 
   /**
@@ -33,7 +55,7 @@ class Client implements ClientInterface {
    */
   public function getClusterStatus() {
     try {
-      $health = $this->client->cluster()->health();
+      $health = $this->proxy_client->cluster()->health();
       return $health['status'];
     } catch (ElasticsearchException $e) {
       return FALSE;
@@ -45,7 +67,7 @@ class Client implements ClientInterface {
    */
   public function isClusterOk() {
     try {
-      $health = $this->client->cluster()->health();
+      $health = $this->proxy_client->cluster()->health();
       if (in_array(
         $health['status'],
         [self::CLUSTER_STATUS_GREEN, self::CLUSTER_STATUS_YELLOW]
@@ -61,6 +83,13 @@ class Client implements ClientInterface {
     return $status;
   }
 
+  public function info() {
+    $info = $this->proxy_client->info();
+    // Compatible with D7 version.
+    $info['status'] = 200;
+    return $info;
+  }
+  
   /**
    * {@inheritdoc}
    */
@@ -72,19 +101,26 @@ class Client implements ClientInterface {
     ];
 
     try {
-      $result['state'] = $this->client->cluster()->State();
+      $result['info'] = $this->proxy_client->info();
+    }
+    catch (ElasticsearchException $e) {
+      throw $e;
+    }
+
+    try {
+      $result['state'] = $this->proxy_client->cluster()->State();
     } catch (ElasticsearchException $e) {
       drupal_set_message($e->getMessage(), 'error');
     }
 
     try {
-      $result['health'] = $this->client->cluster()->Health();
+      $result['health'] = $this->proxy_client->cluster()->Health();
     } catch (ElasticsearchException $e) {
       drupal_set_message($e->getMessage(), 'error');
     }
 
     try {
-      $result['stats'] = $this->client->cluster()->Stats();
+      $result['stats'] = $this->proxy_client->cluster()->Stats();
     } catch (ElasticsearchException $e) {
       drupal_set_message($e->getMessage(), 'error');
     }
@@ -98,8 +134,8 @@ class Client implements ClientInterface {
   public function getNodesProperties() {
     $result = FALSE;
     try {
-      $result['stats'] = $this->client->nodes()->stats();
-      $result['info'] = $this->client->nodes()->info();
+      $result['stats'] = $this->proxy_client->nodes()->stats();
+      $result['info'] = $this->proxy_client->nodes()->info();
     } catch (ElasticsearchException $e) {
       drupal_set_message($e->getMessage(), 'error');
     }
@@ -108,6 +144,13 @@ class Client implements ClientInterface {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function getIndicesStats() {
+    return $this->proxy_client->indices()->stats();
+  }
+  
+  /**
    * Initialize the real Elasticsearch client.
    *
    * @param $params
@@ -115,15 +158,47 @@ class Client implements ClientInterface {
    *
    * @return \Elasticsearch\Client
    */
-  private function initClient($params) {
+  protected function initClient($params) {
     $conn_params = array();
     if (isset($params['curl'])) {
       $conn_params['client']['curl'] = $params['curl'];
     }
 
     $builder = ClientBuilder::create();
+    $params = $this->handleUrls($params);
     $builder->setHosts($params['hosts']);
 
     $this->proxy_client = $builder->build();
+  }
+
+  /**
+   * Handle the URLs specifics like authentication.
+   *
+   * @param array $params
+   *   The client initializer params.
+   *
+   * @return array
+   *   Reworked params if needed.
+   */
+  private function handleUrls($params) {
+    if (isset($params['auth'])) {
+      foreach ($params['hosts'] as $key => $url) {
+        $url_parsed = parse_url($url);
+        if ($url_parsed !== FALSE) {
+          $url_parsed['user'] = $params['auth'][$url]['username'];
+          $url_parsed['pass'] = $params['auth'][$url]['password'];
+          $params['hosts'][$key] =
+            ((isset($url_parsed['scheme'])) ? $url_parsed['scheme'] . '://' : '')
+            .((isset($url_parsed['user'])) ? $url_parsed['user'] . ((isset($url_parsed['pass'])) ? ':' . $url_parsed['pass'] : '') .'@' : '')
+            .((isset($url_parsed['host'])) ? $url_parsed['host'] : '')
+            .((isset($url_parsed['port'])) ? ':' . $url_parsed['port'] : '')
+            .((isset($url_parsed['path'])) ? $url_parsed['path'] : '')
+            .((isset($url_parsed['query'])) ? '?' . $url_parsed['query'] : '')
+            .((isset($url_parsed['fragment'])) ? '#' . $url_parsed['fragment'] : '');
+        }
+      }
+    }
+
+    return $params;
   }
 }

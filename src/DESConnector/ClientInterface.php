@@ -7,8 +7,10 @@ namespace nodespark\DESConnector;
  * Elasticsearch Connector module.
  */
 interface ClientInterface {
+  public function info();
   public function getClusterStatus();
   public function isClusterOk();
   public function getClusterInfo();
   public function getNodesProperties();
+  public function getIndicesStats();
 }
