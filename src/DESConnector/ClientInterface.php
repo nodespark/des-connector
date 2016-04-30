@@ -13,4 +13,5 @@ interface ClientInterface {
   public function getClusterInfo();
   public function getNodesProperties();
   public function getIndicesStats();
+  public function CheckResponseAck();
 }

@@ -5,7 +5,7 @@ namespace nodespark\DESConnector;
 /**
  * Class ClientFactory
  */
-class ClientFactory {
+class ClientFactory implements ClientFactoryInterface {
 
   /**
    * Build an instance of the elastic search client

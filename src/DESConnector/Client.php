@@ -78,6 +78,7 @@ class Client implements ClientInterface {
         $status = FALSE;
       }
     } catch (ElasticsearchException $e) {
+      var_dump($e->getMessage());exit;
       $status = FALSE;
     }
     return $status;
@@ -200,5 +201,21 @@ class Client implements ClientInterface {
     }
 
     return $params;
+  }
+
+  /**
+   * Check if the Elasticsearch response is successful and with status code 200.
+   *
+   * @param mixed $response
+   *
+   * @return bool
+   */
+  public function CheckResponseAck($response) {
+    if (is_array($response) && !empty($response['acknowledged'])) {
+      return TRUE;
+    }
+    else {
+      return FALSE;
+    }
   }
 }
