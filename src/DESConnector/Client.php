@@ -228,4 +228,56 @@ class Client implements ClientInterface {
     $info = $this->info();
     return $info['version']['number'];
   }
+
+  /**
+   * Get all plugins that exists on all nodes.
+   * TODO: This should be changed to check all data Nodes only but for now lets check all of them.
+   *
+   * Read more about plugins system here:
+   * http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-plugins.html
+   *
+   * @return array
+   *
+   * @throws \Exception
+   */
+  function getInstalledPlugins() {
+    $nodes_plugins = array();
+
+    try {
+      $plugins = $this->proxy_client->nodes()->info(array('node_id' => '_all'));
+      foreach ($plugins['nodes'] as $elastic_node_id => $elastic_node) {
+        foreach($elastic_node['plugins'] as $plugin) {
+          $nodes_plugins[$elastic_node_id][$plugin['name']] = $plugin;
+        }
+      }
+
+      return $nodes_plugins;
+    }
+    catch (\Exception $e) {
+      throw $e;
+    }
+  }
+
+  /**
+   * Check if Elasticsearch plugin exists.
+   *
+   * @param string $plugin_name
+   *   The name of the plugin you are looking for.
+   *
+   * @return bool
+   *
+   * @throws \Exception
+   */
+  public function checkIfPluginExists($plugin_name) {
+    $plugins = $this->getInstalledPlugins();
+
+    foreach ($plugins as $elastic_node_id => $plugin) {
+      if (isset($plugin[$plugin_name])) {
+        return TRUE;
+      }
+    }
+
+    return FALSE;
+  }
+
 }

@@ -18,4 +18,6 @@ interface ClientInterface {
   public function getIndicesStats();
   public function CheckResponseAck($response);
   public function getServerVersion();
+  public function getInstalledPlugins();
+  public function checkIfPluginExists($plugin_name);
 }
