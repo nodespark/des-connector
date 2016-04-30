@@ -5,6 +5,9 @@ namespace nodespark\DESConnector;
 /**
  * The Client interface with the required functions needed from
  * Elasticsearch Connector module.
+ *
+ * TODO: Describe all the methods with comments.
+ *
  */
 interface ClientInterface {
   public function info();
@@ -14,4 +17,5 @@ interface ClientInterface {
   public function getNodesProperties();
   public function getIndicesStats();
   public function CheckResponseAck($response);
+  public function getServerVersion();
 }

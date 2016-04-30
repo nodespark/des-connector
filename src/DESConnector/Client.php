@@ -218,4 +218,14 @@ class Client implements ClientInterface {
       return FALSE;
     }
   }
+
+  /**
+   * Get the version number of the Elasticsearch server.
+   *
+   * @throws \Elasticsearch\Common\Exceptions\ElasticsearchException
+   */
+  public function getServerVersion() {
+    $info = $this->info();
+    return $info['version']['number'];
+  }
 }
