@@ -78,7 +78,6 @@ class Client implements ClientInterface {
         $status = FALSE;
       }
     } catch (ElasticsearchException $e) {
-      var_dump($e->getMessage());exit;
       $status = FALSE;
     }
     return $status;
