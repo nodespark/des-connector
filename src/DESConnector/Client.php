@@ -294,7 +294,7 @@ class Client implements ClientInterface {
    * {@inheritdoc}
    */
   public function search($params) {
-    if (empty($params[static::AGGS_STRING]) && $this->aggregations()->hasAggregations()) {
+    if (empty($params[Aggregations::AGGS_STRING]) && $this->aggregations()->hasAggregations()) {
       $this->aggregations()->applyAggregationsToParams($params);
     }
     return $this->proxy_client->search($params);
