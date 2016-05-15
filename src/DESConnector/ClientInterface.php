@@ -20,4 +20,19 @@ interface ClientInterface {
   public function getServerVersion();
   public function getInstalledPlugins();
   public function checkIfPluginExists($plugin_name);
+
+  /**
+   * Return the aggregations object.
+   *
+   * @return \nodespark\DESConnector\Elasticsearch\Aggregations\AggregationsInterface
+   */
+  public function aggregations();
+
+  /**
+   * Search API to Elasticsearch.
+   *
+   * @param $params
+   * @return array
+   */
+  public function search($params);
 }

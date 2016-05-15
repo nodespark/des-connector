@@ -4,6 +4,7 @@ namespace nodespark\DESConnector;
 
 use Elasticsearch\ClientBuilder;
 use Elasticsearch\Common\Exceptions\ElasticsearchException;
+use nodespark\DESConnector\Elasticsearch\Aggregations\Aggregations;
 
 /**
  * TODO: Remove the drupal related functions.
@@ -25,6 +26,8 @@ class Client implements ClientInterface {
 
   protected $params;
 
+  protected $client_uuid;
+
   /**
    * Client constructor.
    *
@@ -32,6 +35,7 @@ class Client implements ClientInterface {
    *   The params that should initialize the client.
    */
   public function __construct($params) {
+    $this->client_uuid = uniqid();
     $this->params = $params;
     $this->initClient($this->params);
   }
@@ -277,6 +281,23 @@ class Client implements ClientInterface {
     }
 
     return FALSE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function aggregations() {
+    return Aggregations::getInstance($this->client_uuid);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function search($params) {
+    if (empty($params[static::AGGS_STRING]) && $this->aggregations()->hasAggregations()) {
+      $this->aggregations()->applyAggregationsToParams($params);
+    }
+    return $this->proxy_client->search($params);
   }
 
 }

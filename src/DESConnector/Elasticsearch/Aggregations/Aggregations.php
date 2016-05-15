@@ -2,9 +2,6 @@
 
 namespace nodespark\DESConnector\Elasticsearch\Aggregations;
 
-// TODO: We need to have an interface.
-// TODO: Singleton definition of that array if needed!
-
 /**
  * TODO:
  * Should generate the following output at the end:
@@ -24,7 +21,7 @@ namespace nodespark\DESConnector\Elasticsearch\Aggregations;
  * Class Aggregations
  * @package nodespark\DESConnector\Elasticsearch\Aggregations
  */
-class Aggregations {
+class Aggregations implements AggregationsInterface {
   const AGGS_STRING = 'aggs';
 
   /**
@@ -33,13 +30,11 @@ class Aggregations {
   private static $instance;
 
   /**
-   * Returns the *Singleton* instance of this class.
-   *
-   * @return Aggregations The *Singleton* instance.
+   * {@inheritdoc}
    */
   public static function getInstance($id = 'default')
   {
-    if (null === static::$instance[$id]) {
+    if (!isset(static::$instance[$id])) {
       static::$instance[$id] = new static();
     }
 
@@ -74,10 +69,23 @@ class Aggregations {
    */
   protected $aggregations = array();
 
+  /**
+   * {@inheritdoc}
+   */
+  public function hasAggregations() {
+    return !empty($this->aggregations);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function setAggregation(AggregationInterface $aggregation) {
     $this->aggregations[$aggregation->getName()] = $aggregation;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function constructAggregation() {
     $aggregationArray = array();
     foreach ($this->aggregations as $name => $aggregationObj) {
@@ -93,6 +101,9 @@ class Aggregations {
     }
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function applyAggregationsToParams(&$params) {
     $aggregationParams = $this->constructAggregation();
     if (!empty($aggregationParams)) {
