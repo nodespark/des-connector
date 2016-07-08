@@ -15,8 +15,14 @@ class ClientFactory implements ClientFactoryInterface {
    *
    * @return \nodespark\DESConnector\ClientInterface
    */
-  public static function create(array $params) {
-    return new Client($params);
+  public function create(array $params) {
+    $instance = new Client($params);
+    if (!($instance instanceof ClientInterface)) {
+      // TODO: Handle the exception with specific class and handle the translation.
+      throw new \Exception('The instance of the class is not the supported one.');
+    }
+
+    return $instance;
   }
 
 }
