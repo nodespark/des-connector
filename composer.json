@@ -4,7 +4,7 @@
   "type": "library",
   "homepage": "https://github.com/nodespark/des-connector",
   "require": {
-    "elasticsearch/elasticsearch": "~2.0"
+    "elasticsearch/elasticsearch": "~5.0"
   },
   "license": "LGPL-2.1",
   "authors": [
@@ -13,6 +13,12 @@
       "email": "nignatov@nodespark.com",
       "homepage": "http://www.nodespark.com",
       "role": "Creator and Maintainer"
+    },
+    {
+      "name": "Lachezar Valchev",
+      "email": "lachezar.valchev@gmail.com",
+      "homepage": "https://drupal.org/u/lachezar.valchev",
+      "role": "Maintainer"
     }
   ],
   "autoload": {
