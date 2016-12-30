@@ -5,7 +5,8 @@ namespace nodespark\DESConnector;
 /**
  * Class ClientFactory
  */
-class ClientFactory implements ClientFactoryInterface {
+class ClientFactory implements ClientFactoryInterface
+{
 
     /**
      * Build an instance of the elastic search client
@@ -15,7 +16,8 @@ class ClientFactory implements ClientFactoryInterface {
      *
      * @return \nodespark\DESConnector\ClientInterface
      */
-    public function create(array $params) {
+    public function create(array $params)
+    {
         $instance = new Client($params);
         if (!($instance instanceof ClientInterface)) {
             // TODO: Handle the exception with specific class and handle the translation.
@@ -24,5 +26,4 @@ class ClientFactory implements ClientFactoryInterface {
 
         return $instance;
     }
-
 }

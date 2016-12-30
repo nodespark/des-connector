@@ -13,7 +13,8 @@ namespace nodespark\DESConnector\Elasticsearch\Aggregations\Metrics;
  *
  * @package nodespark\DESConnector\Elasticsearch\Aggregations\Metrics
  */
-class Cardinality extends Metric {
+class Cardinality extends Metric
+{
     const TYPE = 'cardinality';
 
     protected $precisionThreshold;
@@ -24,7 +25,8 @@ class Cardinality extends Metric {
      * @param string $aggrName
      * @param string $aggrFieldName
      */
-    public function __construct($aggrName, $aggrFieldName) {
+    public function __construct($aggrName, $aggrFieldName)
+    {
         parent::__construct($aggrName, $aggrFieldName, self::TYPE);
     }
 
@@ -40,7 +42,8 @@ class Cardinality extends Metric {
      * @param float $precisionThreshold
      *   The $precisionThreshold value.
      */
-    public function setPrecisionThreshold($precisionThreshold) {
+    public function setPrecisionThreshold($precisionThreshold)
+    {
         $this->precisionThreshold = $precisionThreshold;
     }
 
@@ -48,7 +51,8 @@ class Cardinality extends Metric {
      * Construct the for the aggregation we need.
      * @return array
      */
-    public function constructAggregation() {
+    public function constructAggregation()
+    {
         $aggregation = parent::constructAggregation();
 
         // Set the missing parameter if needed.

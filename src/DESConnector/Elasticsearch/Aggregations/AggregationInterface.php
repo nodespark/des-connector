@@ -7,7 +7,8 @@ namespace nodespark\DESConnector\Elasticsearch\Aggregations;
  *
  * @package nodespark\DESConnector\Elasticsearch\Aggregations
  */
-interface AggregationInterface {
+interface AggregationInterface
+{
 
     /**
      * @return mixed

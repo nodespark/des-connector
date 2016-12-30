@@ -8,7 +8,8 @@ namespace nodespark\DESConnector\Elasticsearch\Aggregations\Bucket;
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-datehistogram-aggregation.html
  * @package nodespark\DESConnector\Elasticsearch\Aggregations\Bucket
  */
-class DateHistogram extends Bucket {
+class DateHistogram extends Bucket
+{
 
     const TYPE = 'date_histogram';
 
@@ -46,7 +47,8 @@ class DateHistogram extends Bucket {
     /**
      * @param $interval
      */
-    public function setInterval($interval) {
+    public function setInterval($interval)
+    {
         // TODO: Validate the interval before set!
         $this->interval = $interval;
     }
@@ -54,7 +56,8 @@ class DateHistogram extends Bucket {
     /**
      * @param $format
      */
-    public function setFormat($format) {
+    public function setFormat($format)
+    {
         $this->format = $format;
     }
 
@@ -63,7 +66,8 @@ class DateHistogram extends Bucket {
      * @param string $aggrName
      * @param string $aggrFieldName
      */
-    public function __construct($aggrName, $aggrFieldName, $interval) {
+    public function __construct($aggrName, $aggrFieldName, $interval)
+    {
         parent::__construct($aggrName, $aggrFieldName, self::TYPE);
         $this->setInterval($interval);
     }
@@ -71,7 +75,8 @@ class DateHistogram extends Bucket {
     /**
      * @inheritdoc
      */
-    public function constructAggregation() {
+    public function constructAggregation()
+    {
         $aggregation = parent::constructAggregation();
 
         // Set the additional parameters if needed.
@@ -85,5 +90,4 @@ class DateHistogram extends Bucket {
 
         return $aggregation;
     }
-
 }

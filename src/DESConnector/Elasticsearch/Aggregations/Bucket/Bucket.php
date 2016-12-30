@@ -11,13 +11,15 @@ use nodespark\DESConnector\Elasticsearch\Aggregations\AggregationInterface;
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket.html
  * @package nodespark\DESConnector\Elasticsearch\Aggregations\Bucket
  */
-abstract class Bucket extends Aggregation implements AggregationInterface {
+abstract class Bucket extends Aggregation implements AggregationInterface
+{
     protected $subAggregations = array();
 
     /**
      * Construct the aggregation body needed for Elasticsearch.
      */
-    public function constructAggregation() {
+    public function constructAggregation()
+    {
         $aggregation = parent::constructAggregation();
 
         // Construct the sub aggregations.
@@ -34,7 +36,8 @@ abstract class Bucket extends Aggregation implements AggregationInterface {
      * @param AggregationInterface $aggregation
      *   The sub aggregation param.
      */
-    public function setSubAggragation(AggregationInterface $aggregation) {
+    public function setSubAggragation(AggregationInterface $aggregation)
+    {
         $this->subAggregations[$aggregation->getName()] = $aggregation;
     }
 }

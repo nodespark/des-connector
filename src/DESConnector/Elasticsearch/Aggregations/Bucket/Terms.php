@@ -8,7 +8,8 @@ namespace nodespark\DESConnector\Elasticsearch\Aggregations\Bucket;
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html
  * @package nodespark\DESConnector\Elasticsearch\Aggregations\Bucket
  */
-class Terms extends Bucket {
+class Terms extends Bucket
+{
 
     const TYPE = 'terms';
 
@@ -28,19 +29,23 @@ class Terms extends Bucket {
      * @param string $aggrName
      * @param string $aggrFieldName
      */
-    public function __construct($aggrName, $aggrFieldName) {
+    public function __construct($aggrName, $aggrFieldName)
+    {
         parent::__construct($aggrName, $aggrFieldName, static::TYPE);
     }
 
-    public function setSize($size) {
+    public function setSize($size)
+    {
         $this->size = $size;
     }
 
-    public function setOrder($order) {
+    public function setOrder($order)
+    {
         $this->order = $order;
     }
 
-    public function constructAggregation() {
+    public function constructAggregation()
+    {
         $aggregation = parent::constructAggregation();
 
         // Set the additional parameters if needed.
@@ -54,5 +59,4 @@ class Terms extends Bucket {
 
         return $aggregation;
     }
-
 }

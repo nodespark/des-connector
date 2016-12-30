@@ -2,12 +2,14 @@
 
 namespace nodespark\DESConnector\Elasticsearch\Aggregations\Metrics;
 
-class Avg extends Metric {
+class Avg extends Metric
+{
     protected $missing;
 
     const TYPE = 'avg';
 
-    public function __construct($aggrName, $aggrFieldName) {
+    public function __construct($aggrName, $aggrFieldName)
+    {
         parent::__construct($aggrName, $aggrFieldName, self::TYPE);
     }
 
@@ -18,14 +20,16 @@ class Avg extends Metric {
      * @param float $missing
      *   The missing value that will be passed to aggregation.
      */
-    public function setMissing($missing) {
+    public function setMissing($missing)
+    {
         $this->missing = $missing;
     }
 
     /**
      * @return array
      */
-    public function constructAggregation() {
+    public function constructAggregation()
+    {
         $aggregation = parent::constructAggregation();
 
         // Set the missing parameter if needed.

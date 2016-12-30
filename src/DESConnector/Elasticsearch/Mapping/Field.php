@@ -6,6 +6,7 @@ namespace nodespark\DESConnector\Elasticsearch\Mapping;
  *
  * @package nodespark\DESConnector\Elasticsearch\Mapping
  */
-abstract class Field {
+abstract class Field
+{
 
 }

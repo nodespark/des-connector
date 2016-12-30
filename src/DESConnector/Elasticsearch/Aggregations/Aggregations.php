@@ -20,7 +20,8 @@ namespace nodespark\DESConnector\Elasticsearch\Aggregations;
  * Class Aggregations
  * @package nodespark\DESConnector\Elasticsearch\Aggregations
  */
-class Aggregations implements AggregationsInterface {
+class Aggregations implements AggregationsInterface
+{
     const AGGS_STRING = 'aggs';
 
     /**
@@ -31,7 +32,8 @@ class Aggregations implements AggregationsInterface {
     /**
      * {@inheritdoc}
      */
-    public static function getInstance($id = 'default') {
+    public static function getInstance($id = 'default')
+    {
         if (!isset(static::$instance[$id])) {
             static::$instance[$id] = new static();
         }
@@ -43,7 +45,8 @@ class Aggregations implements AggregationsInterface {
      * Protected constructor to prevent creating a new instance of the
      * *Singleton* via the `new` operator from outside of this class.
      */
-    protected function __construct() {
+    protected function __construct()
+    {
     }
 
     /**
@@ -52,7 +55,8 @@ class Aggregations implements AggregationsInterface {
      *
      * @return void
      */
-    private function __clone() {
+    private function __clone()
+    {
     }
 
     /**
@@ -61,7 +65,8 @@ class Aggregations implements AggregationsInterface {
      *
      * @return void
      */
-    private function __wakeup() {
+    private function __wakeup()
+    {
     }
 
     /**
@@ -73,21 +78,24 @@ class Aggregations implements AggregationsInterface {
     /**
      * {@inheritdoc}
      */
-    public function hasAggregations() {
+    public function hasAggregations()
+    {
         return !empty($this->aggregations);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setAggregation(AggregationInterface $aggregation) {
+    public function setAggregation(AggregationInterface $aggregation)
+    {
         $this->aggregations[$aggregation->getName()] = $aggregation;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function constructAggregation() {
+    public function constructAggregation()
+    {
         $aggregationArray = array();
         foreach ($this->aggregations as $name => $aggregationObj) {
             $aggsArray = $aggregationObj->constructAggregation();
@@ -96,8 +104,7 @@ class Aggregations implements AggregationsInterface {
 
         if (!empty($aggregationArray)) {
             return array(Aggregations::AGGS_STRING => $aggregationArray);
-        }
-        else {
+        } else {
             return $aggregationArray;
         }
     }
@@ -105,7 +112,8 @@ class Aggregations implements AggregationsInterface {
     /**
      * {@inheritdoc}
      */
-    public function applyAggregationsToParams(&$params) {
+    public function applyAggregationsToParams(&$params)
+    {
         $aggregationParams = $this->constructAggregation();
         if (!empty($aggregationParams)) {
             $params['body'][static::AGGS_STRING] =
@@ -113,8 +121,8 @@ class Aggregations implements AggregationsInterface {
         }
     }
 
-    public function setAggregationResponse($response) {
+    public function setAggregationResponse($response)
+    {
 
     }
-
 }

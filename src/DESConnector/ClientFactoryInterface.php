@@ -7,7 +7,8 @@ namespace nodespark\DESConnector;
  *
  * @package nodespark\DESConnector
  */
-interface ClientFactoryInterface {
+interface ClientFactoryInterface
+{
 
     /**
      * Create and return Elasticsearch client library.

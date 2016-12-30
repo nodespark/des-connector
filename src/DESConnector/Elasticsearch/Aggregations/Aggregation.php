@@ -6,7 +6,8 @@ namespace nodespark\DESConnector\Elasticsearch\Aggregations;
  * Class Aggregation
  * @package nodespark\DESConnector\Elasticsearch\Aggregations
  */
-abstract class Aggregation implements AggregationInterface {
+abstract class Aggregation implements AggregationInterface
+{
     /**
      * @var string
      */
@@ -25,7 +26,7 @@ abstract class Aggregation implements AggregationInterface {
     /**
      * @var bool
      */
-    protected $global = FALSE;
+    protected $global = false;
 
     /**
      * @var array
@@ -40,7 +41,8 @@ abstract class Aggregation implements AggregationInterface {
      * @param string $aggrFieldName
      *   The aggregation field name.
      */
-    public function __construct($aggrName, $aggrFieldName, $aggrType) {
+    public function __construct($aggrName, $aggrFieldName, $aggrType)
+    {
         $this->name = $aggrName;
         $this->fieldName = $aggrFieldName;
         $this->type = $aggrType;
@@ -49,18 +51,21 @@ abstract class Aggregation implements AggregationInterface {
     /**
      * @param bool $isGlobal
      */
-    public function setGlobalScope($isGlobal) {
+    public function setGlobalScope($isGlobal)
+    {
         $this->global = $isGlobal;
     }
 
-    public function getGlobalName() {
+    public function getGlobalName()
+    {
         return $this->name . '_global';
     }
 
     /**
      * Construct the aggregation body needed for Elasticsearch.
      */
-    public function constructAggregation() {
+    public function constructAggregation()
+    {
         $aggregation = array(
             $this->name => array(
                 $this->type => array(
@@ -86,15 +91,18 @@ abstract class Aggregation implements AggregationInterface {
      * @return string
      *   The aggregation name.
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
-    public function setResponse($response) {
+    public function setResponse($response)
+    {
 
     }
 
-    public function parseResponse() {
+    public function parseResponse()
+    {
 
     }
 

@@ -7,7 +7,8 @@ namespace nodespark\DESConnector\Elasticsearch\Aggregations;
  *
  * @package nodespark\DESConnector\Elasticsearch\Aggregations
  */
-interface AggregationsInterface {
+interface AggregationsInterface
+{
     /**
      * Returns the *Singleton* instance of this class.
      *
@@ -47,5 +48,4 @@ interface AggregationsInterface {
      * @return
      */
     public function applyAggregationsToParams(&$params);
-
 }

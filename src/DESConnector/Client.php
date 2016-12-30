@@ -13,7 +13,8 @@ use nodespark\DESConnector\Elasticsearch\Aggregations\Aggregations;
 /**
  * Class Client
  */
-class Client implements ClientInterface {
+class Client implements ClientInterface
+{
 
     /**
      *
@@ -49,7 +50,8 @@ class Client implements ClientInterface {
      * @param array $params
      *   The params that should initialize the client.
      */
-    public function __construct($params) {
+    public function __construct($params)
+    {
         $this->client_uuid = uniqid();
         $this->params = $params;
         $this->initClient($this->params);
@@ -63,7 +65,8 @@ class Client implements ClientInterface {
      * @param $name
      * @param $arguments
      */
-    public function __call($name, $arguments) {
+    public function __call($name, $arguments)
+    {
         if (method_exists($this->proxy_client, $name)) {
             return call_user_func_array(array(
                 $this->proxy_client,
@@ -75,19 +78,21 @@ class Client implements ClientInterface {
     /**
      * {@inheritdoc}
      */
-    public function getClusterStatus() {
+    public function getClusterStatus()
+    {
         try {
             $health = $this->proxy_client->cluster()->health();
             return $health['status'];
         } catch (ElasticsearchException $e) {
-            return FALSE;
+            return false;
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function isClusterOk() {
+    public function isClusterOk()
+    {
         try {
             $health = $this->proxy_client->cluster()->health();
 
@@ -95,13 +100,12 @@ class Client implements ClientInterface {
                 $health['status'],
                 [self::CLUSTER_STATUS_GREEN, self::CLUSTER_STATUS_YELLOW]
             )) {
-                $status = TRUE;
-            }
-            else {
-                $status = FALSE;
+                $status = true;
+            } else {
+                $status = false;
             }
         } catch (ElasticsearchException $e) {
-            $status = FALSE;
+            $status = false;
         }
         return $status;
     }
@@ -109,7 +113,8 @@ class Client implements ClientInterface {
     /**
      * @return array
      */
-    public function info() {
+    public function info()
+    {
         $info = $this->proxy_client->info();
         // Compatible with D7 version.
         $info['status'] = 200;
@@ -119,11 +124,12 @@ class Client implements ClientInterface {
     /**
      * {@inheritdoc}
      */
-    public function getClusterInfo() {
+    public function getClusterInfo()
+    {
         $result = [
-            'state' => NULL,
-            'health' => NULL,
-            'stats' => NULL,
+            'state' => null,
+            'health' => null,
+            'stats' => null,
         ];
 
         try {
@@ -156,8 +162,9 @@ class Client implements ClientInterface {
     /**
      * {@inheritdoc}
      */
-    public function getNodesProperties() {
-        $result = FALSE;
+    public function getNodesProperties()
+    {
+        $result = false;
         try {
             $result['stats'] = $this->proxy_client->nodes()->stats();
             $result['info'] = $this->proxy_client->nodes()->info();
@@ -171,7 +178,8 @@ class Client implements ClientInterface {
     /**
      * {@inheritdoc}
      */
-    public function getIndicesStats() {
+    public function getIndicesStats()
+    {
         return $this->proxy_client->indices()->stats();
     }
 
@@ -183,7 +191,8 @@ class Client implements ClientInterface {
      *
      * @return \Elasticsearch\Client
      */
-    protected function initClient($params) {
+    protected function initClient($params)
+    {
         $conn_params = array();
         if (isset($params['curl'])) {
             $conn_params['client']['curl'] = $params['curl'];
@@ -205,11 +214,12 @@ class Client implements ClientInterface {
      * @return array
      *   Reworked params if needed.
      */
-    private function handleUrls($params) {
+    private function handleUrls($params)
+    {
         if (isset($params['auth'])) {
             foreach ($params['hosts'] as $key => $url) {
                 $url_parsed = parse_url($url);
-                if ($url_parsed !== FALSE) {
+                if ($url_parsed !== false) {
                     $url_parsed['user'] = $params['auth'][$url]['username'];
                     $url_parsed['pass'] = $params['auth'][$url]['password'];
                     $params['hosts'][$key] =
@@ -234,12 +244,12 @@ class Client implements ClientInterface {
      *
      * @return bool
      */
-    public function CheckResponseAck($response) {
+    public function CheckResponseAck($response)
+    {
         if (is_array($response) && !empty($response['acknowledged'])) {
-            return TRUE;
-        }
-        else {
-            return FALSE;
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -248,7 +258,8 @@ class Client implements ClientInterface {
      *
      * @throws \Elasticsearch\Common\Exceptions\ElasticsearchException
      */
-    public function getServerVersion() {
+    public function getServerVersion()
+    {
         $info = $this->info();
         return $info['version']['number'];
     }
@@ -264,7 +275,8 @@ class Client implements ClientInterface {
      *
      * @throws \Exception
      */
-    function getInstalledPlugins() {
+    function getInstalledPlugins()
+    {
         $nodes_plugins = array();
 
         try {
@@ -292,29 +304,32 @@ class Client implements ClientInterface {
      *
      * @throws \Exception
      */
-    public function checkIfPluginExists($plugin_name) {
+    public function checkIfPluginExists($plugin_name)
+    {
         $plugins = $this->getInstalledPlugins();
 
         foreach ($plugins as $elastic_node_id => $plugin) {
             if (isset($plugin[$plugin_name])) {
-                return TRUE;
+                return true;
             }
         }
 
-        return FALSE;
+        return false;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function aggregations() {
+    public function aggregations()
+    {
         return Aggregations::getInstance($this->client_uuid);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function search($params) {
+    public function search($params)
+    {
         if (empty($params[Aggregations::AGGS_STRING]) && $this->aggregations()
                 ->hasAggregations()
         ) {
@@ -322,5 +337,4 @@ class Client implements ClientInterface {
         }
         return $this->proxy_client->search($params);
     }
-
 }

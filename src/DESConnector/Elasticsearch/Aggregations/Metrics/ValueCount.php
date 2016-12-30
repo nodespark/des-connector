@@ -2,12 +2,12 @@
 
 namespace nodespark\DESConnector\Elasticsearch\Aggregations\Metrics;
 
-
 /**
  * Class ValueCount
  *
  * @package nodespark\DESConnector\Elasticsearch\Aggregations\Metrics
  */
-class ValueCount extends Metric {
+class ValueCount extends Metric
+{
 
 }

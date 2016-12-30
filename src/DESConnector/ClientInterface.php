@@ -9,7 +9,8 @@ namespace nodespark\DESConnector;
  * TODO: Describe all the methods with comments.
  *
  */
-interface ClientInterface {
+interface ClientInterface
+{
     public function info();
 
     public function getClusterStatus();
