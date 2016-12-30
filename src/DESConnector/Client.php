@@ -15,8 +15,17 @@ use nodespark\DESConnector\Elasticsearch\Aggregations\Aggregations;
  */
 class Client implements ClientInterface {
 
+  /**
+   *
+   */
   const CLUSTER_STATUS_GREEN = 'green';
+  /**
+   *
+   */
   const CLUSTER_STATUS_YELLOW = 'yellow';
+  /**
+   *
+   */
   const CLUSTER_STATUS_RED = 'red';
 
   /**
@@ -24,8 +33,14 @@ class Client implements ClientInterface {
    */
   protected $proxy_client;
 
+  /**
+   * @var array
+   */
   protected $params;
 
+  /**
+   * @var string
+   */
   protected $client_uuid;
 
   /**
@@ -72,6 +87,7 @@ class Client implements ClientInterface {
   public function isClusterOk() {
     try {
       $health = $this->proxy_client->cluster()->health();
+
       if (in_array(
         $health['status'],
         [self::CLUSTER_STATUS_GREEN, self::CLUSTER_STATUS_YELLOW]
@@ -87,13 +103,16 @@ class Client implements ClientInterface {
     return $status;
   }
 
+  /**
+   * @return array
+   */
   public function info() {
     $info = $this->proxy_client->info();
     // Compatible with D7 version.
     $info['status'] = 200;
     return $info;
   }
-  
+
   /**
    * {@inheritdoc}
    */
@@ -153,7 +172,7 @@ class Client implements ClientInterface {
   public function getIndicesStats() {
     return $this->proxy_client->indices()->stats();
   }
-  
+
   /**
    * Initialize the real Elasticsearch client.
    *

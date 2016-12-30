@@ -1,4 +1,5 @@
 <?php
+
 namespace nodespark\DESConnector\Elasticsearch\Aggregations\Metrics;
 
 /**

@@ -71,6 +71,9 @@ abstract class Aggregation implements AggregationInterface {
 
     if ($this->global) {
      $aggregation[$this->getGlobalName()] = array(
+       // TODO: Check if global is available for all Aggregations or it is bind
+       // to Bucket only.
+       // TODO: Global to make it as const.
        'global' => array(),
        Aggregations::AGGS_STRING => $aggregation,
      );
@@ -94,4 +97,6 @@ abstract class Aggregation implements AggregationInterface {
   public function parseResponse() {
 
   }
+
+  // TODO: Add meta support.
 }

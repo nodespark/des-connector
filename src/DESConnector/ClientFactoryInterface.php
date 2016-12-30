@@ -2,6 +2,11 @@
 
 namespace nodespark\DESConnector;
 
+/**
+ * Interface ClientFactoryInterface
+ *
+ * @package nodespark\DESConnector
+ */
 interface ClientFactoryInterface {
 
   /**
