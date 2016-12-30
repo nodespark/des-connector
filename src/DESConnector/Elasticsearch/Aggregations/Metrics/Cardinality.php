@@ -14,48 +14,48 @@ namespace nodespark\DESConnector\Elasticsearch\Aggregations\Metrics;
  * @package nodespark\DESConnector\Elasticsearch\Aggregations\Metrics
  */
 class Cardinality extends Metric {
-  const TYPE = 'cardinality';
+    const TYPE = 'cardinality';
 
-  protected $precisionThreshold;
+    protected $precisionThreshold;
 
-  /**
-   * Cardinality constructor.
-   *
-   * @param string $aggrName
-   * @param string $aggrFieldName
-   */
-  public function __construct($aggrName, $aggrFieldName) {
-    parent::__construct($aggrName, $aggrFieldName, self::TYPE);
-  }
-
-  /**
-   * The precision_threshold options allows to trade memory for accuracy,
-   * and defines a unique count below which counts are expected to be close to
-   * accurate. Above this value, counts might become a bit more fuzzy.
-   * The maximum supported value is 40000, thresholds above this number will
-   * have the same effect as a threshold of 40000. Default value depends on
-   * the number of parent aggregations that multiple create buckets
-   * (such as terms or histograms).
-   *
-   * @param float $precisionThreshold
-   *   The $precisionThreshold value.
-   */
-  public function setPrecisionThreshold($precisionThreshold) {
-    $this->precisionThreshold = $precisionThreshold;
-  }
-
-  /**
-   * Construct the for the aggregation we need.
-   * @return array
-   */
-  public function constructAggregation() {
-    $aggregation = parent::constructAggregation();
-
-    // Set the missing parameter if needed.
-    if (isset($this->precisionThreshold)) {
-      $aggregation[$this->name][self::TYPE]['precision_threshold'] = $this->precisionThreshold;
+    /**
+     * Cardinality constructor.
+     *
+     * @param string $aggrName
+     * @param string $aggrFieldName
+     */
+    public function __construct($aggrName, $aggrFieldName) {
+        parent::__construct($aggrName, $aggrFieldName, self::TYPE);
     }
 
-    return $aggregation;
-  }
+    /**
+     * The precision_threshold options allows to trade memory for accuracy,
+     * and defines a unique count below which counts are expected to be close to
+     * accurate. Above this value, counts might become a bit more fuzzy.
+     * The maximum supported value is 40000, thresholds above this number will
+     * have the same effect as a threshold of 40000. Default value depends on
+     * the number of parent aggregations that multiple create buckets
+     * (such as terms or histograms).
+     *
+     * @param float $precisionThreshold
+     *   The $precisionThreshold value.
+     */
+    public function setPrecisionThreshold($precisionThreshold) {
+        $this->precisionThreshold = $precisionThreshold;
+    }
+
+    /**
+     * Construct the for the aggregation we need.
+     * @return array
+     */
+    public function constructAggregation() {
+        $aggregation = parent::constructAggregation();
+
+        // Set the missing parameter if needed.
+        if (isset($this->precisionThreshold)) {
+            $aggregation[$this->name][self::TYPE]['precision_threshold'] = $this->precisionThreshold;
+        }
+
+        return $aggregation;
+    }
 }

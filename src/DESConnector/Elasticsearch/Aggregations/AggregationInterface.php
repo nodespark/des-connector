@@ -9,8 +9,8 @@ namespace nodespark\DESConnector\Elasticsearch\Aggregations;
  */
 interface AggregationInterface {
 
-  /**
-   * @return mixed
-   */
-  public function getName();
+    /**
+     * @return mixed
+     */
+    public function getName();
 }
