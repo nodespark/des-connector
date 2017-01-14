@@ -32,6 +32,11 @@ interface ClientInterface
     public function checkIfPluginExists($plugin_name);
 
     /**
+     * @return \Elasticsearch\Namespaces\IndicesNamespace
+     */
+    public function indices();
+
+    /**
      * Return the aggregations object.
      *
      * @return \nodespark\DESConnector\Elasticsearch\Aggregations\AggregationsInterface

@@ -337,4 +337,12 @@ class Client implements ClientInterface
         }
         return $this->proxy_client->search($params);
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function indices()
+    {
+        return $this->proxy_client->indices();
+    }
 }
