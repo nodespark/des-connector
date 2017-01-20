@@ -2,7 +2,7 @@
 
 namespace nodespark\DESConnector;
 
-use nodespark\DESConnector\Response\SearchResponseInterface;
+use nodespark\DESConnector\Elasticsearch\Response\SearchResponseInterface;
 
 /**
  * The Client interface with the required functions needed from
@@ -62,7 +62,7 @@ interface ClientInterface
      * Search API to Elasticsearch.
      *
      * @param $params
-     * @return array
+     * @return SearchResponseInterface
      */
     public function search($params);
 }

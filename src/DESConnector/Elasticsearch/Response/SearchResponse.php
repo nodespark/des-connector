@@ -4,7 +4,7 @@
  * Handling the search response by parsing and manipulate it.
  */
 
-namespace nodespark\DESConnector\Response;
+namespace nodespark\DESConnector\Elasticsearch\Response;
 
 use nodespark\DESConnector\Elasticsearch\Objects\Document;
 

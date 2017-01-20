@@ -1,6 +1,6 @@
 <?php
 
-namespace nodespark\DESConnector\Response;
+namespace nodespark\DESConnector\Elasticsearch\Response;
 
 interface SearchResponseInterface
 {

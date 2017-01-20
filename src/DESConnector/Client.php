@@ -5,8 +5,8 @@ namespace nodespark\DESConnector;
 use Elasticsearch\ClientBuilder;
 use Elasticsearch\Common\Exceptions\ElasticsearchException;
 use nodespark\DESConnector\Elasticsearch\Aggregations\Aggregations;
-use nodespark\DESConnector\Response\SearchResponse;
-use nodespark\DESConnector\Response\SearchResponseInterface;
+use nodespark\DESConnector\Elasticsearch\Response\SearchResponse;
+use nodespark\DESConnector\Elasticsearch\Response\SearchResponseInterface;
 
 /**
  * Class Client
@@ -345,7 +345,9 @@ class Client implements ClientInterface
             $this->aggregations()->applyAggregationsToParams($params);
         }
 
-        return $this->proxy_client->search($params);
+        $response = $this->setSearchResponse($this->proxy_client->search($params));
+
+        return $response;
     }
 
     /**
@@ -357,9 +359,7 @@ class Client implements ClientInterface
     }
 
     /**
-     * Get the SearchResponseInterface handler to parse the search response.
-     *
-     * @return SearchResponseInterface
+     * @inheritdoc
      */
     public function getSearchResponse()
     {
@@ -367,8 +367,7 @@ class Client implements ClientInterface
     }
 
     /**
-     * @param array $searchResponse
-     * @return SearchResponseInterface
+     * @inheritdoc
      */
     public function setSearchResponse(array $searchResponse)
     {
