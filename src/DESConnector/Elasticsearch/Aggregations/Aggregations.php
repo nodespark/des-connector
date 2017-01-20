@@ -70,6 +70,14 @@ class Aggregations implements AggregationsInterface
     }
 
     /**
+     * Private serialize method to prevent serializing of the *Singleton*
+     * instance.
+     */
+    private function __sleep()
+    {
+    }
+
+    /**
      * @var array
      *   Array of Aggregation objects.
      */
