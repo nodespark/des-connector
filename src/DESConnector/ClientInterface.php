@@ -2,6 +2,7 @@
 
 namespace nodespark\DESConnector;
 
+use nodespark\DESConnector\Elasticsearch\Query\QueryInterface;
 use nodespark\DESConnector\Elasticsearch\Response\SearchResponseInterface;
 
 /**
@@ -41,10 +42,13 @@ interface ClientInterface
     public function getSearchResponse();
 
     /**
+     * Set the response returned from Elasticsearch.
+     *
      * @param array $searchResponse
+     * @param QueryInterface $query
      * @return SearchResponseInterface
      */
-    public function setSearchResponse(array $searchResponse);
+    public function setSearchResponse(array $searchResponse, QueryInterface $query);
 
     /**
      * @return \Elasticsearch\Namespaces\IndicesNamespace

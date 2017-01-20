@@ -2,7 +2,7 @@
 
 namespace nodespark\DESConnector\Elasticsearch\Query;
 
-
-interface QueryInterface {
+interface QueryInterface
+{
 
 }

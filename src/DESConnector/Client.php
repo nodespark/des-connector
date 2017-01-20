@@ -2,9 +2,14 @@
 
 namespace nodespark\DESConnector;
 
+// TODO: We should only have interfaces here, all actual classes,
+// should be injected.
+
 use Elasticsearch\ClientBuilder;
 use Elasticsearch\Common\Exceptions\ElasticsearchException;
 use nodespark\DESConnector\Elasticsearch\Aggregations\Aggregations;
+use nodespark\DESConnector\Elasticsearch\Query\Query;
+use nodespark\DESConnector\Elasticsearch\Query\QueryInterface;
 use nodespark\DESConnector\Elasticsearch\Response\SearchResponse;
 use nodespark\DESConnector\Elasticsearch\Response\SearchResponseInterface;
 
@@ -345,7 +350,10 @@ class Client implements ClientInterface
             $this->aggregations()->applyAggregationsToParams($params);
         }
 
-        $response = $this->setSearchResponse($this->proxy_client->search($params));
+        // Temporary workaround until we have fully functional query builder.
+        $query = new Query();
+
+        $response = $this->setSearchResponse($this->proxy_client->search($params), $query);
 
         return $response;
     }
@@ -369,9 +377,9 @@ class Client implements ClientInterface
     /**
      * @inheritdoc
      */
-    public function setSearchResponse(array $searchResponse)
+    public function setSearchResponse(array $searchResponse, QueryInterface $query)
     {
-        $this->searchResponse = new SearchResponse($searchResponse);
+        $this->searchResponse = new SearchResponse($searchResponse, $this->aggregations(), $query);
         return $this->searchResponse;
     }
 }

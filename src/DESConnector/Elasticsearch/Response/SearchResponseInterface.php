@@ -2,6 +2,9 @@
 
 namespace nodespark\DESConnector\Elasticsearch\Response;
 
+use nodespark\DESConnector\Elasticsearch\Aggregations\AggregationsInterface;
+use nodespark\DESConnector\Elasticsearch\Query\QueryInterface;
+
 interface SearchResponseInterface
 {
     /**
@@ -9,8 +12,12 @@ interface SearchResponseInterface
      *
      * @param array $response
      *   The response from execution of \Elasticsearch\Client::search() method
+     * @param AggregationsInterface $aggregations
+     *   The aggregations for the current search.
+     * @param QueryInterface $query
+     *   The query for the current search.
      */
-    public function __construct(array $response);
+    public function __construct(array $response, AggregationsInterface $aggregations, QueryInterface $query);
 
     /**
      * Get the time Elasticsearch spending on executing the search.

@@ -6,7 +6,8 @@
 
 namespace nodespark\DESConnector\Elasticsearch\Response;
 
-use nodespark\DESConnector\Elasticsearch\Objects\Document;
+use nodespark\DESConnector\Elasticsearch\Aggregations\AggregationsInterface;
+use nodespark\DESConnector\Elasticsearch\Query\QueryInterface;
 
 class SearchResponse implements SearchResponseInterface
 {
@@ -15,6 +16,16 @@ class SearchResponse implements SearchResponseInterface
      * @var array
      */
     protected $response = array();
+
+    /**
+     * @var AggregationsInterface
+     */
+    protected $aggregations;
+
+    /**
+     * @var QueryInterface
+     */
+    protected $query;
 
     /**
      * The time spend for the search request.
@@ -31,9 +42,10 @@ class SearchResponse implements SearchResponseInterface
     /**
      * @inheritdoc
      */
-    public function __construct(array $response)
+    public function __construct(array $response, AggregationsInterface $aggregations, QueryInterface $query)
     {
         $this->response = $response;
+        $this->aggregations = $aggregations;
     }
 
     /**
