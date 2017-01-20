@@ -2,7 +2,7 @@
 
 namespace nodespark\DESConnector\Elasticsearch\Objects;
 
-class Document
+class Document implements DocumentInterface
 {
 
 }
