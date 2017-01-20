@@ -62,8 +62,13 @@ class Client implements ClientInterface
      * If the method is not found, search if the method exists in the proxy.
      * If exists, call it.
      *
-     * @param $name
-     * @param $arguments
+     * @param string $name
+     *   The name of the method we are calling.
+     * @param array $arguments
+     *   The arguments passed to the method.
+     *
+     * @return mixed
+     *   The result of the execution of the proxy_client method.
      */
     public function __call($name, $arguments)
     {
@@ -73,6 +78,8 @@ class Client implements ClientInterface
                 $name
             ), $arguments);
         }
+
+        return false;
     }
 
     /**
@@ -141,19 +148,16 @@ class Client implements ClientInterface
         try {
             $result['state'] = $this->proxy_client->cluster()->State();
         } catch (ElasticsearchException $e) {
-            drupal_set_message($e->getMessage(), 'error');
         }
 
         try {
             $result['health'] = $this->proxy_client->cluster()->Health();
         } catch (ElasticsearchException $e) {
-            drupal_set_message($e->getMessage(), 'error');
         }
 
         try {
             $result['stats'] = $this->proxy_client->cluster()->Stats();
         } catch (ElasticsearchException $e) {
-            drupal_set_message($e->getMessage(), 'error');
         }
 
         return $result;
@@ -169,7 +173,6 @@ class Client implements ClientInterface
             $result['stats'] = $this->proxy_client->nodes()->stats();
             $result['info'] = $this->proxy_client->nodes()->info();
         } catch (ElasticsearchException $e) {
-            drupal_set_message($e->getMessage(), 'error');
         }
 
         return $result;
@@ -189,7 +192,7 @@ class Client implements ClientInterface
      * @param $params
      *   The client initializer.
      *
-     * @return \Elasticsearch\Client
+     * @return void
      */
     protected function initClient($params)
     {
@@ -224,7 +227,8 @@ class Client implements ClientInterface
                     $url_parsed['pass'] = $params['auth'][$url]['password'];
                     $params['hosts'][$key] =
                         ((isset($url_parsed['scheme'])) ? $url_parsed['scheme'] . '://' : '')
-                        . ((isset($url_parsed['user'])) ? $url_parsed['user'] . ((isset($url_parsed['pass'])) ? ':' . $url_parsed['pass'] : '') . '@' : '')
+                        . ((isset($url_parsed['user'])) ? $url_parsed['user'] .
+                            ((isset($url_parsed['pass'])) ? ':' . $url_parsed['pass'] : '') . '@' : '')
                         . ((isset($url_parsed['host'])) ? $url_parsed['host'] : '')
                         . ((isset($url_parsed['port'])) ? ':' . $url_parsed['port'] : '')
                         . ((isset($url_parsed['path'])) ? $url_parsed['path'] : '')
@@ -239,6 +243,8 @@ class Client implements ClientInterface
 
     /**
      * Check if the Elasticsearch response is successful and with status code 200.
+     *
+     * TODO: Change the method to use camel case format!
      *
      * @param mixed $response
      *
@@ -275,7 +281,7 @@ class Client implements ClientInterface
      *
      * @throws \Exception
      */
-    function getInstalledPlugins()
+    public function getInstalledPlugins()
     {
         $nodes_plugins = array();
 
@@ -335,6 +341,7 @@ class Client implements ClientInterface
         ) {
             $this->aggregations()->applyAggregationsToParams($params);
         }
+
         return $this->proxy_client->search($params);
     }
 
