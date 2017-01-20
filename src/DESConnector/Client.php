@@ -5,10 +5,8 @@ namespace nodespark\DESConnector;
 use Elasticsearch\ClientBuilder;
 use Elasticsearch\Common\Exceptions\ElasticsearchException;
 use nodespark\DESConnector\Elasticsearch\Aggregations\Aggregations;
-
-/**
- * TODO: Remove the drupal related functions.
- */
+use nodespark\DESConnector\Response\SearchResponse;
+use nodespark\DESConnector\Response\SearchResponseInterface;
 
 /**
  * Class Client
@@ -43,6 +41,11 @@ class Client implements ClientInterface
      * @var string
      */
     protected $client_uuid;
+
+    /**
+     * @var SearchResponseInterface
+     */
+    protected $searchResponse;
 
     /**
      * Client constructor.
@@ -351,5 +354,25 @@ class Client implements ClientInterface
     public function indices()
     {
         return $this->proxy_client->indices();
+    }
+
+    /**
+     * Get the SearchResponseInterface handler to parse the search response.
+     *
+     * @return SearchResponseInterface
+     */
+    public function getSearchResponse()
+    {
+        return $this->searchResponse;
+    }
+
+    /**
+     * @param array $searchResponse
+     * @return SearchResponseInterface
+     */
+    public function setSearchResponse(array $searchResponse)
+    {
+        $this->searchResponse = new SearchResponse($searchResponse);
+        return $this->searchResponse;
     }
 }

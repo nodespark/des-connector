@@ -2,6 +2,8 @@
 
 namespace nodespark\DESConnector;
 
+use nodespark\DESConnector\Response\SearchResponseInterface;
+
 /**
  * The Client interface with the required functions needed from
  * Elasticsearch Connector module.
@@ -30,6 +32,19 @@ interface ClientInterface
     public function getInstalledPlugins();
 
     public function checkIfPluginExists($plugin_name);
+
+    /**
+     * Get the SearchResponseInterface handler to parse the search response.
+     *
+     * @return SearchResponseInterface
+     */
+    public function getSearchResponse();
+
+    /**
+     * @param array $searchResponse
+     * @return SearchResponseInterface
+     */
+    public function setSearchResponse(array $searchResponse);
 
     /**
      * @return \Elasticsearch\Namespaces\IndicesNamespace
