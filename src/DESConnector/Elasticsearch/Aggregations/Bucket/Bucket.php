@@ -4,6 +4,7 @@ namespace nodespark\DESConnector\Elasticsearch\Aggregations\Bucket;
 
 use nodespark\DESConnector\Elasticsearch\Aggregations\Aggregation;
 use nodespark\DESConnector\Elasticsearch\Aggregations\AggregationInterface;
+use nodespark\DESConnector\Elasticsearch\Aggregations\SubAggregationInterface;
 
 /**
  * Class Bucket.
@@ -11,7 +12,7 @@ use nodespark\DESConnector\Elasticsearch\Aggregations\AggregationInterface;
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket.html
  * @package nodespark\DESConnector\Elasticsearch\Aggregations\Bucket
  */
-abstract class Bucket extends Aggregation implements AggregationInterface
+abstract class Bucket extends Aggregation implements AggregationInterface, SubAggregationInterface
 {
     protected $subAggregations = array();
 
