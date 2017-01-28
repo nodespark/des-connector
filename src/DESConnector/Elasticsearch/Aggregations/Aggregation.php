@@ -23,7 +23,7 @@ abstract class Aggregation implements AggregationInterface
      */
     protected $type;
 
-    protected $parameters = [];
+    protected $parameters = array();
 
     /**
      * @var bool
