@@ -23,6 +23,8 @@ abstract class Aggregation implements AggregationInterface
      */
     protected $type;
 
+    protected $parameters = [];
+
     /**
      * @var bool
      */
@@ -61,6 +63,35 @@ abstract class Aggregation implements AggregationInterface
         return $this->name . '_global';
     }
 
+    public function getFieldName()
+    {
+        return $this->fieldName;
+    }
+
+    protected function getParameter($key)
+    {
+        return isset($this->parameters[$key]) ? $this->parameters[$key] : NULL;
+    }
+
+    protected function addParameter($key, $param_value)
+    {
+        $this->parameters[$key] = $param_value;
+    }
+
+    protected function removeParameter($key)
+    {
+        unset($this->parameters[$key]);
+    }
+
+    protected function getParameters()
+    {
+        if (empty($this->parameters)) {
+            $this->addParameter('field', $this->getFieldName());
+        }
+
+        return $this->parameters;
+    }
+
     /**
      * Construct the aggregation body needed for Elasticsearch.
      */
@@ -68,9 +99,7 @@ abstract class Aggregation implements AggregationInterface
     {
         $aggregation = array(
             $this->name => array(
-                $this->type => array(
-                    'field' => $this->fieldName,
-                )
+                $this->type => $this->getParameters(),
             )
         );
 
@@ -98,12 +127,10 @@ abstract class Aggregation implements AggregationInterface
 
     public function setResponse($response)
     {
-
     }
 
     public function parseResponse()
     {
-
     }
 
     // TODO: Add meta support.
