@@ -37,7 +37,7 @@ abstract class Bucket extends Aggregation implements AggregationInterface, SubAg
      * @param AggregationInterface $aggregation
      *   The sub aggregation param.
      */
-    public function setSubAggragation(AggregationInterface $aggregation)
+    public function setSubAggregation(AggregationInterface $aggregation)
     {
         $this->subAggregations[$aggregation->getName()] = $aggregation;
     }
