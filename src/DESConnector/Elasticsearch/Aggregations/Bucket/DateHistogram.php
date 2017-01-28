@@ -41,53 +41,92 @@ class DateHistogram extends Bucket
         'ms' => 'ms',
     );
 
-    protected $interval;
-    protected $format;
-
     /**
-     * @param $interval
+     * @param $value
      */
-    public function setInterval($interval)
+    public function setInterval($value)
     {
         // TODO: Validate the interval before set!
-        $this->interval = $interval;
+        $this->addParameter('interval', $value);
     }
 
     /**
-     * @param $format
+     * @param $value
      */
-    public function setFormat($format)
+    public function setTimeZone($value)
     {
-        $this->format = $format;
+        // TODO: timeZone should be an object itself;
+        $this->addParameter('time_zone', $value);
     }
 
     /**
-     * DateHistogram constructor.
-     * @param string $aggrName
-     * @param string $aggrFieldName
+     * @param $value
      */
-    public function __construct($aggrName, $aggrFieldName, $interval)
+    public function setOffSet($value)
     {
-        parent::__construct($aggrName, $aggrFieldName, self::TYPE);
-        $this->setInterval($interval);
+        $this->addParameter('offset', $value);
     }
 
     /**
-     * @inheritdoc
+     * @param $value
      */
-    public function constructAggregation()
+    public function setMinDocCount($value)
     {
-        $aggregation = parent::constructAggregation();
-
-        // Set the additional parameters if needed.
-        if (isset($this->format)) {
-            $aggregation[$this->name][self::TYPE]['format'] = $this->format;
-        }
-
-        if (isset($this->interval)) {
-            $aggregation[$this->name][self::TYPE]['interval'] = $this->interval;
-        }
-
-        return $aggregation;
+        $this->addParameter('min_doc_count', $value);
     }
+
+    /**
+     * @param $min
+     * @param @max
+     */
+    public function setExtendedBounds($min, $max)
+    {
+        $this->addParameter(
+            'extended_bounds',
+            array(
+                'min' => $min,
+                'max' => $max,
+            )
+        );
+    }
+
+    /**
+     * @param $key
+     * @param $direction
+     */
+    public function setOrder($key, $direction)
+    {
+        $this->addParameter(
+            'order',
+            array(
+                $key => $direction,
+            )
+        );
+    }
+
+    /**
+     * @param $value
+     */
+    public function setKeyed($value = FALSE)
+    {
+        $this->addParameter('keyed', $value);
+    }
+
+    /**
+     * @param $value
+     */
+    public function setFormat($value)
+    {
+        $this->addParameter('format', $value);
+    }
+
+    /**
+     * @param $key
+     * @param $direction
+     */
+    public function setMissing($value)
+    {
+        $this->addParameter('missing', $value);
+    }
+
 }
