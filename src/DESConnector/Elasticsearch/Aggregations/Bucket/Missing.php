@@ -10,4 +10,6 @@ namespace nodespark\DESConnector\Elasticsearch\Aggregations\Bucket;
 class Missing extends Bucket
 {
 
+    const TYPE = 'missing';
+
 }

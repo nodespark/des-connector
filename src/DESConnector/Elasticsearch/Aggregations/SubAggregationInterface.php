@@ -10,5 +10,5 @@ namespace nodespark\DESConnector\Elasticsearch\Aggregations;
 
 interface SubAggregationInterface
 {
-    public function setSubAggragation(AggregationInterface $aggregation);
+    public function setSubAggregation(AggregationInterface $aggregation);
 }

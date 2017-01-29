@@ -17,6 +17,16 @@ abstract class Bucket extends Aggregation implements AggregationInterface, SubAg
     protected $subAggregations = array();
 
     /**
+     * @param string $aggrName
+     * @param string $aggrFieldName
+     */
+    public function __construct($aggrName, $aggrFieldName)
+    {
+        parent::__construct($aggrName, $aggrFieldName, static::TYPE);
+        $this->addParameter('field', $aggrFieldName);
+    }
+
+    /**
      * Construct the aggregation body needed for Elasticsearch.
      */
     public function constructAggregation()
@@ -37,7 +47,7 @@ abstract class Bucket extends Aggregation implements AggregationInterface, SubAg
      * @param AggregationInterface $aggregation
      *   The sub aggregation param.
      */
-    public function setSubAggragation(AggregationInterface $aggregation)
+    public function setSubAggregation(AggregationInterface $aggregation)
     {
         $this->subAggregations[$aggregation->getName()] = $aggregation;
     }
