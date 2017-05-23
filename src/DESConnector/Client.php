@@ -213,6 +213,10 @@ class Client implements ClientInterface
         $params = $this->handleUrls($params);
         $builder->setHosts($params['hosts']);
 
+        if (isset($params['handler'])) {
+            $builder->setHandler($params['handler']);
+        }
+
         $this->proxy_client = $builder->build();
     }
 
