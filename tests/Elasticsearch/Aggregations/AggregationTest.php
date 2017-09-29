@@ -54,6 +54,7 @@ class AggregationTest extends TestCase {
   /**
    * @covers ::constructAggregation
    * @covers ::getParameters
+   * @covers ::setGlobalScope
    */
   public function testConsructAggregation() {
     $expected_aggregation = [
