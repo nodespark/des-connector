@@ -26,7 +26,15 @@
       "nodespark\\DESConnector\\": "src/DESConnector/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "nodespark\\DESConnector\Test\\": "tests/"
+    }
+  },
   "support": {
     "source": "https://github.com/nodespark/des-connector"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.3"
   }
 }
