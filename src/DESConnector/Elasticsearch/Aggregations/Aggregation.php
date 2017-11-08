@@ -108,7 +108,8 @@ abstract class Aggregation implements AggregationInterface
                 // TODO: Check if global is available for all Aggregations or it is bind
                 // to Bucket only.
                 // TODO: Global to make it as const.
-                'global' => array(),
+                // Global has to be an (empty) object.
+                'global' => new \stdClass(),
                 Aggregations::AGGS_STRING => $aggregation,
             );
         }
