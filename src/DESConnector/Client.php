@@ -212,7 +212,9 @@ class Client implements ClientInterface
         $builder = ClientBuilder::create();
         $params = $this->handleUrls($params);
         $builder->setHosts($params['hosts']);
-        $builder->setConnectionParams($conn_params);
+        if (!empty($conn_params)) {
+            $builder->setConnectionParams($conn_params);
+        }
 
         if (isset($params['handler'])) {
             $builder->setHandler($params['handler']);
