@@ -351,7 +351,7 @@ class Client implements ClientInterface
      */
     public function search($params)
     {
-        if (empty($params[Aggregations::AGGS_STRING]) && $this->aggregations()
+        if (empty($params['body'][Aggregations::AGGS_STRING]) && $this->aggregations()
                 ->hasAggregations()
         ) {
             $this->aggregations()->applyAggregationsToParams($params);
