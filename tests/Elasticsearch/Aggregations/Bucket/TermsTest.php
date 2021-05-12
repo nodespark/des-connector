@@ -22,7 +22,7 @@ class TermsTest extends TestCase {
   /**
    * @inheritDoc
    */
-  protected function setUp() {
+  protected function setUp() : void {
     parent::setUp();
 
     $this->terms = new Terms('foo', 'bar');

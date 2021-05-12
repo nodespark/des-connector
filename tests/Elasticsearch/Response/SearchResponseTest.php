@@ -45,7 +45,7 @@ class SearchResponseTest extends TestCase {
   /**
    * @inheritDoc
    */
-  protected function setUp() {
+  protected function setUp() : void {
     parent::setUp();
 
     $this->response = [
@@ -58,7 +58,7 @@ class SearchResponseTest extends TestCase {
       ],
       'hits' => [
         'max_score' => 2,
-        'total' => 100,
+        'total' => ['value' => 100],
         'hits' => [
           'alpha' => 'bravo',
         ],

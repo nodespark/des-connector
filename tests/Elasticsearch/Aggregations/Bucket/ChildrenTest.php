@@ -24,7 +24,7 @@ class ChildrenTest extends TestCase {
   /**
    * @inheritDoc
    */
-  protected function setUp() {
+  protected function setUp() : void {
     parent::setUp();
 
     $this->children = new Children('foo', 'bar');
