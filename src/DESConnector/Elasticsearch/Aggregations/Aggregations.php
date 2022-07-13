@@ -65,7 +65,7 @@ class Aggregations implements AggregationsInterface
      *
      * @return void
      */
-    private function __wakeup()
+    public function __wakeup()
     {
     }
 
@@ -73,7 +73,7 @@ class Aggregations implements AggregationsInterface
      * Private serialize method to prevent serializing of the *Singleton*
      * instance.
      */
-    private function __sleep()
+    public function __sleep()
     {
     }
 

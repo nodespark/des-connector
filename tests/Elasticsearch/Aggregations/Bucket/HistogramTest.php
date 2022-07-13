@@ -22,7 +22,7 @@ class HistogramTest extends TestCase {
   /**
    * @inheritDoc
    */
-  protected function setUp() {
+  protected function setUp() : void {
     parent::setUp();
 
     $this->histogram = new Histogram('foo', 'bar');

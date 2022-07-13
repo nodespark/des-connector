@@ -22,7 +22,7 @@ class AggregationTest extends TestCase {
   /**
    * @inheritDoc
    */
-  protected function setUp() {
+  protected function setUp() : void {
     parent::setUp();
 
     $this->aggregation = $this->getMockForAbstractClass('\nodespark\DESConnector\Elasticsearch\Aggregations\Aggregation',
@@ -81,9 +81,7 @@ class AggregationTest extends TestCase {
         ],
       'foo_global' =>
         [
-          'global' =>
-            [
-            ],
+          'global' => new \stdClass(),
           'aggs' =>
             [
               'foo' =>

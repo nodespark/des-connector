@@ -22,7 +22,7 @@ class DateRangeTest extends TestCase {
   /**
    * @inheritDoc
    */
-  protected function setUp() {
+  protected function setUp() : void {
     parent::setUp();
 
     $this->dateRange = new DateRange('foo', 'bar');

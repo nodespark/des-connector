@@ -22,7 +22,7 @@ class RangeTest extends TestCase {
   /**
    * @inheritDoc
    */
-  protected function setUp() {
+  protected function setUp() : void {
     parent::setUp();
 
     $this->range = new Range('foo', 'bar');
