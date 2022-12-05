@@ -5,7 +5,7 @@
   "homepage": "https://github.com/nodespark/des-connector",
   "require": {
     "php": "^7.2 || ^8.0",
-    "ruflin/elastica": "dev-master"
+    "ruflin/elastica": "^7.0"
   },
   "license": "LGPL-2.1",
   "authors": [
