@@ -176,14 +176,16 @@ class Client implements ClientInterface
      */
     public function getNodesProperties()
     {
-        $result = false;
         try {
-            $result['stats'] = $this->proxy_client->nodes()->stats();
-            $result['info'] = $this->proxy_client->nodes()->info();
-        } catch (ElasticsearchException $e) {
-        }
+            $nodes = $this->proxy_client->nodes();
 
-        return $result;
+            return [
+                'stats' => $nodes->stats(),
+                'info' => $nodes->info(),
+            ];
+        } catch (ElasticsearchException $e) {
+            return false;
+        }
     }
 
     /**
